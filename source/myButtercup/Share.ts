@@ -1,4 +1,3 @@
-import { mergeHistories, prependSharePrefix, removeSharePrefix } from "../tools/sharing";
 import { hashHistory } from "../tools/hash";
 import { History } from "../types";
 
@@ -11,7 +10,7 @@ export default class Share {
 
     constructor(shareID: string, history: History, permissions: Array<string> = []) {
         this._id = shareID;
-        this._history = removeSharePrefix(history);
+        // this._history = removeSharePrefix(history);
         this._lastHash = hashHistory(this._history);
         this._dirty = false;
         this._permissions = permissions;
@@ -26,15 +25,15 @@ export default class Share {
     }
 
     applyToArchive(archive: any) {
-        if (this.archiveHasAppliedShare(archive)) {
-            throw new Error("Target archive has already had share applied");
-        }
-        const westley = archive._getWestley();
-        westley.executionOptions = {
-            permissions: this.permissions
-        };
-        this.getPrefixedHistory().forEach(line => westley.execute(line));
-        westley.executionOptions = {};
+        // if (this.archiveHasAppliedShare(archive)) {
+        //     throw new Error("Target archive has already had share applied");
+        // }
+        // const westley = archive._getWestley();
+        // westley.executionOptions = {
+        //     permissions: this.permissions
+        // };
+        // this.getPrefixedHistory().forEach(line => westley.execute(line));
+        // westley.executionOptions = {};
     }
 
     archiveHasAppliedShare(archive: any) {
@@ -42,18 +41,18 @@ export default class Share {
     }
 
     getPrefixedHistory() {
-        return prependSharePrefix(this._history, this.id);
+        // return prependSharePrefix(this._history, this.id);
     }
 
     updateHistory(history) {
-        const incoming = removeSharePrefix(history);
-        const incomingHash = hashHistory(incoming);
-        if (incomingHash === this._lastHash) {
-            return false;
-        }
-        this._history = mergeHistories(this._history, incoming);
-        this._lastHash = hashHistory(this._history);
-        this._dirty = true;
-        return true;
+        // const incoming = removeSharePrefix(history);
+        // const incomingHash = hashHistory(incoming);
+        // if (incomingHash === this._lastHash) {
+        //     return false;
+        // }
+        // this._history = mergeHistories(this._history, incoming);
+        // this._lastHash = hashHistory(this._history);
+        // this._dirty = true;
+        // return true;
     }
 }
