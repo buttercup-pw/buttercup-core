@@ -2,7 +2,7 @@ import VaultItem from "./VaultItem";
 import Entry from "./Entry";
 import Vault from "./Vault";
 import { generateUUID } from "../tools/uuid";
-import { moveGroupBetweenVaults } from "../tools/sharing";
+import { moveGroupBetweenVaults } from "../tools/group";
 import { findGroupsByTitle, getAllChildGroups } from "../search/groups";
 import { findEntriesByProperty, getAllChildEntries } from "../search/entries";
 import { EntryID, GroupID } from "../types";

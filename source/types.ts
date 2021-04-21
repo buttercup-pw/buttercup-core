@@ -129,7 +129,6 @@ export interface FormatAEntry {
     parentID: GroupID;
     permissions?: Array<VaultPermission>;
     history?: Array<EntryLegacyHistoryItem>;
-    shareID?: string;
 }
 
 export interface FormatAGroup {
@@ -140,7 +139,6 @@ export interface FormatAGroup {
     title: string;
     parentID: GroupID;
     permissions?: Array<VaultPermission>;
-    shareID?: string;
 }
 
 export interface FormatAVault {
@@ -155,6 +153,7 @@ export interface FormatBEntry {
     g: GroupID;
     a: FormatBKeyValueObject;
     p: FormatBKeyValueObject;
+    s?: ShareID;
 }
 
 export interface FormatBGroup {
@@ -162,6 +161,7 @@ export interface FormatBGroup {
     a: FormatBKeyValueObject;
     t: string;
     g: GroupID;
+    s?: ShareID;
 }
 
 export interface FormatBKeyValueObject {
@@ -199,7 +199,6 @@ export interface GroupFacade {
 
 export type GroupID = string;
 
-// export type History = Array<string>;
 export interface History extends Array<string> {
     format?: VaultFormatID;
 }
@@ -273,6 +272,8 @@ export interface PropertyKeyValueObject {
 }
 
 export type SetTimeout = ReturnType<typeof setTimeout>;
+
+export type ShareID = string;
 
 export type UTCTimestamp = number;
 

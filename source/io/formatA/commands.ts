@@ -30,7 +30,7 @@ export function executeCreateEntry(archive: FormatAVault, opts: any, groupID: Gr
         properties: {
             title: ""
         },
-        shareID: opts.shareID,
+        // shareID: opts.shareID,
         parentID: groupID
     };
     if (opts.permissions) {
@@ -49,7 +49,7 @@ export function executeCreateGroup(archive: FormatAVault, opts: any, parentID: G
     const group: FormatAGroup = {
         id: newID,
         title: "New group",
-        shareID: opts.shareID,
+        // shareID: opts.shareID,
         parentID
     };
     if (opts.permissions) {

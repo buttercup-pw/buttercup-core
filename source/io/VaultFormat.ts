@@ -247,4 +247,9 @@ export default class VaultFormat extends EventEmitter {
     setVaultAttribute(key: string, value: string) {
         notImplemented();
     }
+
+    supportsShares(): boolean {
+        notImplemented();
+        return false;
+    }
 }
