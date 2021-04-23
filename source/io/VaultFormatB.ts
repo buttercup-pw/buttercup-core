@@ -154,12 +154,14 @@ export default class VaultFormatB extends VaultFormat {
 
     deleteEntryAttribute(entryID: EntryID, attribute: string) {
         const entry = this.source.e.find((e: FormatBEntry) => e.id === entryID);
-        entry.a[attribute].deleted = getTimestamp();
+        entry.a[attribute].deleted = entry.a[attribute].updated = getTimestamp();
+        entry.a[attribute].history.unshift(valueToHistoryItem(null));
     }
 
     deleteEntryProperty(entryID: EntryID, property: string) {
         const entry = this.source.e.find(e => e.id === entryID);
-        entry.p[property].deleted = getTimestamp();
+        entry.p[property].deleted = entry.p[property].updated = getTimestamp();
+        entry.p[property].history.unshift(valueToHistoryItem(null));
     }
 
     deleteGroup(groupID: GroupID) {
@@ -171,11 +173,13 @@ export default class VaultFormatB extends VaultFormat {
 
     deleteGroupAttribute(groupID: GroupID, attribute: string) {
         const group = this.source.g.find(g => g.id === groupID);
-        group.a[attribute].deleted = getTimestamp();
+        group.a[attribute].deleted = group.a[attribute].updated = getTimestamp();
+        group.a[attribute].history.unshift(valueToHistoryItem(null));
     }
 
     deleteVaultAttribute(attribute: string) {
-        this.source.a[attribute].deleted = getTimestamp();
+        this.source.a[attribute].deleted = this.source.a[attribute].updated = getTimestamp();
+        this.source.a[attribute].history.unshift(valueToHistoryItem(null));
     }
 
     erase() {

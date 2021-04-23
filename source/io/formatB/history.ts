@@ -5,12 +5,16 @@ export const MAX_ATTRIBUTE_HISTORY = 3;
 export const MAX_PROPERTY_HISTORY = 5;
 
 export function cloneValue(value: FormatBValue) {
-    return {
+    const output: FormatBValue = {
         value: value.value,
         created: value.created,
         updated: value.updated,
         history: value.history.map(item => Object.assign({}, item))
     };
+    if (value.deleted) {
+        output.deleted = value.deleted;
+    }
+    return output;
 }
 
 function filterDuplicateHistoryItems(items: Array<FormatBValueHistoryItem>): Array<FormatBValueHistoryItem> {
@@ -26,12 +30,16 @@ export function mergeValues(value1: FormatBValue, value2: FormatBValue, type: En
     const newHistory = sortValueHistory(
         filterDuplicateHistoryItems([valueToHistoryItem(olderValue), ...value1.history, ...value2.history])
     );
-    return {
+    const output: FormatBValue = {
         value: mostRecentValue.value,
         created: mostRecentValue.created,
         updated: mostRecentValue.updated,
         history: trimValueHistory(newHistory, type)
     };
+    if (mostRecentValue.deleted) {
+        output.deleted = mostRecentValue.deleted;
+    }
+    return output;
 }
 
 export function newRawValue(value: string): FormatBValue {
