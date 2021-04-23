@@ -6,22 +6,16 @@ export default class Share {
     _history: History;
     _id: string;
     _lastHash: string;
-    _permissions: Array<string>;
 
-    constructor(shareID: string, history: History, permissions: Array<string> = []) {
+    constructor(shareID: string, history: History) {
         this._id = shareID;
         // this._history = removeSharePrefix(history);
         this._lastHash = hashHistory(this._history);
         this._dirty = false;
-        this._permissions = permissions;
     }
 
     get id() {
         return this._id;
-    }
-
-    get permissions() {
-        return [...this._permissions];
     }
 
     applyToArchive(archive: any) {

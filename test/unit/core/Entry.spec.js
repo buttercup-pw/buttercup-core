@@ -4,7 +4,6 @@ const {
     Vault,
     VaultFormatA,
     VaultFormatB,
-    VaultPermission,
     setDefaultFormat
 } = require("../../../dist/index.node.js");
 const { expect } = require("chai");
@@ -39,14 +38,6 @@ describe("core/Entry", function() {
             describe("get:id", function() {
                 it("returns the correct ID", function() {
                     expect(this.entry.id).to.equal(this.entry._source.id);
-                });
-            });
-
-            describe("get:permissions", function() {
-                it("returns all permissions by default", function() {
-                    expect(this.entry.permissions).to.contain(VaultPermission.Manage);
-                    expect(this.entry.permissions).to.contain(VaultPermission.Read);
-                    expect(this.entry.permissions).to.contain(VaultPermission.Write);
                 });
             });
 

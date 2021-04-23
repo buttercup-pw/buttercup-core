@@ -1,4 +1,4 @@
-const { Entry, Group, Vault, VaultPermission, generateUUID } = require("../../../dist/index.node.js");
+const { Entry, Group, Vault, generateUUID } = require("../../../dist/index.node.js");
 
 describe("core/Group", function() {
     beforeEach(function() {
@@ -13,14 +13,6 @@ describe("core/Group", function() {
     describe("get:id", function() {
         it("returns the correct ID", function() {
             expect(this.group.id).to.equal(this.group._source.id);
-        });
-    });
-
-    describe("get:permissions", function() {
-        it("returns all permissions by default", function() {
-            expect(this.group.permissions).to.contain(VaultPermission.Manage);
-            expect(this.group.permissions).to.contain(VaultPermission.Read);
-            expect(this.group.permissions).to.contain(VaultPermission.Write);
         });
     });
 
