@@ -51,16 +51,18 @@ describe("io/formatB/merge", function() {
 
         it("deletes groups when merged group is deleted", function() {
             const [v1, v2] = createDualVault();
-            v2.g = [];
+            v2.g[0].d = getTimestamp();
             const merged = mergeRawVaults(v1, v2);
-            expect(merged.g).to.have.a.lengthOf(0, "No groups should remain");
+            expect(merged.g).to.have.a.lengthOf(1);
+            expect(merged.g[0].d).to.be.a("number");
         });
 
         it("deletes entries when merged entry is deleted", function() {
             const [v1, v2] = createDualVault();
-            v2.e = [];
+            v2.e[0].d = getTimestamp();
             const merged = mergeRawVaults(v1, v2);
-            expect(merged.e).to.have.a.lengthOf(0, "No groups should remain");
+            expect(merged.e).to.have.a.lengthOf(1);
+            expect(merged.e[0].d).to.be.a("number");
         });
 
         it("deletes group attributes when merged attribute is deleted", function() {
