@@ -171,6 +171,8 @@ export interface FormatBKeyValueObject {
 export interface FormatBShare {
     id: ShareID;
     upd: string;
+    k: string;
+    p: Array<SharePermission>;
 }
 
 export interface FormatBValue {
@@ -192,6 +194,7 @@ export interface FormatBVault {
     g: Array<FormatBGroup>;
     e: Array<FormatBEntry>;
     c: DateString;
+    s: Array<FormatBShare>;
 }
 
 export interface GroupFacade {
@@ -206,6 +209,16 @@ export type GroupID = string;
 
 export interface History extends Array<string> {
     format?: VaultFormatID;
+}
+
+export interface IncomingShare {
+    id: ShareID;
+    format: VaultFormatID;
+    key: string;
+    update: string;
+    permissions: Array<SharePermission>;
+    groups: Array<FormatBGroup>;
+    entries: Array<FormatBEntry>;
 }
 
 export interface MemoryStore {
@@ -272,6 +285,15 @@ export interface MyButtercupVaultDetails {
     updateID: number;
 }
 
+export interface OutgoingShare {
+    id: ShareID;
+    format: VaultFormatID;
+    key: string;
+    update: string;
+    groups: Array<FormatBGroup>;
+    entries: Array<FormatBEntry>;
+}
+
 export interface PropertyKeyValueObject {
     [key: string]: string;
 }
@@ -279,6 +301,12 @@ export interface PropertyKeyValueObject {
 export type SetTimeout = ReturnType<typeof setTimeout>;
 
 export type ShareID = string;
+
+export enum SharePermission {
+    Manage = "m",
+    Read = "r",
+    Write = "w"
+}
 
 export type UTCTimestamp = number;
 

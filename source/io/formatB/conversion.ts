@@ -36,7 +36,8 @@ export function convertFormatAVault(vault: FormatAVault): FormatBVault {
         a: flatKeyValueObjectToValuesObject(vault.attributes || {}),
         g: getAllFormatAGroups(vault).map(group => convertFormatAGroup(group)),
         e: getAllFormatAEntries(vault).map(entry => convertFormatAEntry(entry)),
-        c: getDateString()
+        c: getDateString(),
+        s: []
     };
 }
 

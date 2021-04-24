@@ -1,5 +1,6 @@
 import VaultFormat from "./VaultFormat";
 import Vault from "../core/Vault";
+import Share from "../core/Share";
 import { generateUUID } from "../tools/uuid";
 import { getSharedAppEnv } from "../env/appEnv";
 import { getCredentials } from "../credentials/channel";
@@ -17,11 +18,13 @@ import {
     EntryID,
     FormatBEntry,
     FormatBGroup,
+    FormatBShare,
     FormatBValueHistoryItem,
     FormatBVault,
     GroupID,
     History,
     PropertyKeyValueObject,
+    ShareID,
     VaultFormatID,
     VaultID
 } from "../types";
@@ -32,7 +35,8 @@ function emptyVault(): FormatBVault {
         a: {},
         g: [],
         e: [],
-        c: getDateString()
+        c: getDateString(),
+        s: []
     };
 }
 
@@ -145,6 +149,10 @@ export default class VaultFormatB extends VaultFormat {
         this.source.g.push(group);
     }
 
+    createShareInstance(share: FormatBShare): Share {
+        return new Share(share.id, share.upd, share.k, share.p);
+    }
+
     deleteEntry(entryID: EntryID) {
         const ind = this.source.e.findIndex(entry => entry.id === entryID);
         if (ind >= 0) {
@@ -242,6 +250,10 @@ export default class VaultFormatB extends VaultFormat {
         return groups.filter(g => !g.d);
     }
 
+    getAllShares(): Array<FormatBShare> {
+        return [...(this.source.s || [])];
+    }
+
     getEntryAttributes(entrySource: FormatBEntry): PropertyKeyValueObject {
         return valuesObjectToKeyValueObject(entrySource.a);
     }
@@ -305,6 +317,10 @@ export default class VaultFormatB extends VaultFormat {
 
     getItemParentID(itemSource: FormatBGroup | FormatBEntry): GroupID | "0" {
         return itemSource.g;
+    }
+
+    getShareID(share: FormatBShare): ShareID {
+        return share.id;
     }
 
     getVaultAttributes() {

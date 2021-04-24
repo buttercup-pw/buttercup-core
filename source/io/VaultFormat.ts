@@ -1,6 +1,7 @@
 import EventEmitter from "eventemitter3";
 import Credentials from "../credentials/Credentials";
 import Vault from "../core/Vault";
+import Share from "../core/Share";
 import {
     EntryChange,
     EntryID,
@@ -9,10 +10,12 @@ import {
     FormatAVault,
     FormatBEntry,
     FormatBGroup,
+    FormatBShare,
     FormatBVault,
     GroupID,
     History,
     PropertyKeyValueObject,
+    ShareID,
     VaultFormatID
 } from "../types";
 
@@ -89,6 +92,11 @@ export default class VaultFormat extends EventEmitter {
         notImplemented();
     }
 
+    createShareInstance(share: FormatBShare): Share {
+        notImplemented();
+        return null;
+    }
+
     deleteEntry(entryID: EntryID) {
         notImplemented();
     }
@@ -159,6 +167,11 @@ export default class VaultFormat extends EventEmitter {
         return [];
     }
 
+    getAllShares(): Array<FormatBShare> {
+        notImplemented();
+        return [];
+    }
+
     getEntryAttributes(entrySource: FormatAEntry | FormatBEntry): PropertyKeyValueObject {
         notImplemented();
         return {};
@@ -199,6 +212,11 @@ export default class VaultFormat extends EventEmitter {
     }
 
     getItemParentID(itemSource: FormatAGroup | FormatAEntry | FormatBGroup | FormatBEntry): GroupID | "0" {
+        notImplemented();
+        return "";
+    }
+
+    getShareID(itemSource: FormatBShare): ShareID {
         notImplemented();
         return "";
     }

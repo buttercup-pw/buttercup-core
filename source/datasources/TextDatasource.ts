@@ -227,6 +227,15 @@ export default class TextDatasource extends EventEmitter {
     }
 
     /**
+     * Whether or not the datasource supports share exchanges
+     * @returns {Boolean}
+     * @memberof TextDatasource
+     */
+    supportsShares(): boolean {
+        return false;
+    }
+
+    /**
      * Record vault insights, if supported, to some destination
      * @param insights Vault insights data
      * @memberof TextDatasource

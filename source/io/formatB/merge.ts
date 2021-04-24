@@ -43,7 +43,8 @@ export function mergeRawVaults(base: FormatBVault, incoming: FormatBVault): Form
         a: mergeProperties(base.a, incoming.a, EntryPropertyType.Attribute),
         g: [],
         e: [],
-        c: base.c
+        c: base.c,
+        s: []
     };
     // Process unique (one vault only) groups
     const uniqueGroupsBase = base.g.filter(group => !incoming.g.find(inGroup => inGroup.id === group.id));
