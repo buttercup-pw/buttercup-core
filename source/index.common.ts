@@ -27,6 +27,7 @@ export { default as DropboxDatasource } from "./datasources/DropboxDatasource";
 export { default as GoogleDriveDatasource } from "./datasources/GoogleDriveDatasource";
 export { default as MyButtercupDatasource } from "./datasources/MyButtercupDatasource";
 export { default as MyButtercupClient } from "./myButtercup/MyButtercupClient";
+export { default as ButtercupServerDatasource } from "./datasources/ButtercupServerDatasource";
 export { default as DatasourceAuthManager } from "./datasources/DatasourceAuthManager";
 export { registerDatasource } from "./datasources/register";
 
