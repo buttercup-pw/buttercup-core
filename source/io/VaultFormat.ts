@@ -216,6 +216,11 @@ export default class VaultFormat extends EventEmitter {
         return "";
     }
 
+    getItemShareID(itemSource: FormatBGroup | FormatBEntry): ShareID | null {
+        notImplemented();
+        return null;
+    }
+
     getShareID(itemSource: FormatBShare): ShareID {
         notImplemented();
         return "";

@@ -32,7 +32,9 @@ export default class Entry extends VaultItem {
         const group = vault.findGroupByID(parentGroupID);
         if (!group) {
             throw new Error(`Failed creating entry: no group found for ID: ${parentGroupID}`);
-        } else if (group.isTrash() || group.isInTrash()) {
+        }
+        group._requireWritePermission();
+        if (group.isTrash() || group.isInTrash()) {
             throw new Error("Failed creating entry: cannot create within Trash group");
         }
         // Generate new entry ID
@@ -55,6 +57,7 @@ export default class Entry extends VaultItem {
      * @memberof Entry
      */
     delete(skipTrash: boolean = false): boolean {
+        this._requireWritePermission();
         const trashGroup = this.vault.getTrashGroup();
         const parentGroup = this.getGroup();
         const canTrash = trashGroup && parentGroup && !parentGroup.isTrash() && !parentGroup.isInTrash();
@@ -81,6 +84,7 @@ export default class Entry extends VaultItem {
      * @returns Self
      */
     deleteAttribute(attribute: string): this {
+        this._requireWritePermission();
         this.vault.format.deleteEntryAttribute(this.id, attribute);
         return this;
     }
@@ -93,6 +97,7 @@ export default class Entry extends VaultItem {
      * @returns Self
      */
     deleteProperty(property: string): this {
+        this._requireWritePermission();
         this.vault.format.deleteEntryProperty(this.id, property);
         return this;
     }
@@ -220,6 +225,8 @@ export default class Entry extends VaultItem {
      * @memberof Entry
      */
     moveToGroup(group: Group): this {
+        this._requireWritePermission();
+        // @todo Detect moving outside of share range
         this.vault.format.moveEntry(this.id, group.id);
         return this;
     }
@@ -232,6 +239,7 @@ export default class Entry extends VaultItem {
      * @memberof Entry
      */
     setAttribute(attribute: string, value: string): this {
+        this._requireWritePermission();
         this.vault.format.setEntryAttribute(this.id, attribute, value);
         return this;
     }
@@ -244,6 +252,7 @@ export default class Entry extends VaultItem {
      * @memberof Entry
      */
     setProperty(property: string, value: string): this {
+        this._requireWritePermission();
         this.vault.format.setEntryProperty(this.id, property, value);
         return this;
     }

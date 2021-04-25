@@ -319,6 +319,10 @@ export default class VaultFormatB extends VaultFormat {
         return itemSource.g;
     }
 
+    getItemShareID(itemSource: FormatBGroup | FormatBEntry): ShareID | null {
+        return itemSource.s ?? null;
+    }
+
     getShareID(share: FormatBShare): ShareID {
         return share.id;
     }

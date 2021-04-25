@@ -33,7 +33,9 @@ export default class Group extends VaultItem {
             const group = vault.findGroupByID(parentID);
             if (!group) {
                 throw new Error(`Failed creating group: no group found for ID: ${parentID}`);
-            } else if (group.isTrash() || group.isInTrash()) {
+            }
+            group._requireWritePermission();
+            if (group.isTrash() || group.isInTrash()) {
                 throw new Error("Failed creating group: cannot create within Trash group");
             }
         }
@@ -49,6 +51,7 @@ export default class Group extends VaultItem {
      * @memberof Group
      */
     createEntry(title?: string): Entry {
+        this._requireWritePermission();
         const entry = Entry.createNew(this.vault, this.id);
         if (title) {
             entry.setProperty("title", title);
@@ -63,6 +66,7 @@ export default class Group extends VaultItem {
      * @memberof Group
      */
     createGroup(title?: string): Group {
+        this._requireWritePermission();
         const group = Group.createNew(this.vault, this.id);
         if (title) {
             group.setTitle(title);
@@ -79,6 +83,7 @@ export default class Group extends VaultItem {
      * @memberof Group
      */
     delete(skipTrash: boolean = false): boolean {
+        this._requireWritePermission();
         if (this.isTrash()) {
             throw new Error("Trash group cannot be deleted");
         }
@@ -112,6 +117,7 @@ export default class Group extends VaultItem {
      * @memberof Group
      */
     deleteAttribute(attr: string): this {
+        this._requireWritePermission();
         this.vault.format.deleteGroupAttribute(this.id, attr);
         return this;
     }
@@ -249,6 +255,8 @@ export default class Group extends VaultItem {
      * @memberof Group
      */
     moveTo(target: Group | Vault): this {
+        this._requireWritePermission();
+        // @todo Detect moving outside of share range
         if (this.isTrash()) {
             throw new Error("Trash group cannot be moved");
         }
@@ -274,6 +282,7 @@ export default class Group extends VaultItem {
             // target is local, so create commands here
             this.vault.format.moveGroup(this.id, targetGroupID);
         } else {
+            this._requireMgmtPermission();
             // target is in another archive, so move there
             moveGroupBetweenVaults(this, target);
         }
@@ -288,6 +297,7 @@ export default class Group extends VaultItem {
      * @memberof Group
      */
     setAttribute(attribute: string, value: string): this {
+        this._requireWritePermission();
         this.vault.format.setGroupAttribute(this.id, attribute, value);
         return this;
     }
@@ -298,6 +308,7 @@ export default class Group extends VaultItem {
      * @returns Returns self
      */
     setTitle(title: string): this {
+        this._requireWritePermission();
         this.vault.format.setGroupTitle(this.id, title);
         return this;
     }

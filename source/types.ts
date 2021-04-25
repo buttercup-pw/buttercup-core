@@ -122,6 +122,11 @@ export enum EntryType {
     Website = "website"
 }
 
+export enum ErrorCode {
+    NoManagementPermission = "perm:no-mgmt",
+    NoWritePermission = "perm:no-write"
+}
+
 export interface FormatAEntry {
     id: EntryID;
     attributes?: PropertyKeyValueObject;
