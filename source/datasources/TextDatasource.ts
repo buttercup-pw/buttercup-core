@@ -11,6 +11,8 @@ import {
     DatasourceLoadedData,
     EncryptedContent,
     History,
+    IncomingShare,
+    OutgoingShare,
     VaultID,
     VaultInsights
 } from "../types";
@@ -129,12 +131,12 @@ export default class TextDatasource extends EventEmitter {
      * @throws {Error} Rejects if content is empty
      * @memberof TextDatasource
      */
-    load(credentials: Credentials): Promise<DatasourceLoadedData> {
+    async load(credentials: Credentials): Promise<DatasourceLoadedData> {
         if (!this._content) {
-            return Promise.reject(new Error("Failed to load vault: Content is empty"));
+            throw new Error("Failed to load vault: Content is empty");
         }
         if (credentialsAllowsPurpose(credentials.id, Credentials.PURPOSE_DECRYPT_VAULT) !== true) {
-            return Promise.reject(new Error("Provided credentials don't allow vault decryption"));
+            throw new Error("Provided credentials don't allow vault decryption");
         }
         const Format = detectFormat(this._content);
         return Format.parseEncrypted(this._content, credentials).then((history: History) => ({
@@ -151,13 +153,21 @@ export default class TextDatasource extends EventEmitter {
      * @param details Attachment details object
      * @memberof TextDatasource
      */
-    putAttachment(
+    async putAttachment(
         vaultID: VaultID,
         attachmentID: string,
         buffer: BufferLike,
         details: AttachmentDetails
     ): Promise<void> {
-        return Promise.reject(new Error("Attachments not supported"));
+        throw new Error("Attachments not supported");
+    }
+
+    /**
+     * Receive new shares from remote
+     * @memberof TextDatasource
+     */
+    async receiveShares(): Promise<Array<IncomingShare>> {
+        throw new Error("Shares not supported");
     }
 
     /**
@@ -166,8 +176,8 @@ export default class TextDatasource extends EventEmitter {
      * @param attachmentID The ID of the attachment
      * @memberof TextDatasource
      */
-    removeAttachment(vaultID: VaultID, attachmentID: string): Promise<void> {
-        return Promise.reject(new Error("Attachments not supported"));
+    async removeAttachment(vaultID: VaultID, attachmentID: string): Promise<void> {
+        throw new Error("Attachments not supported");
     }
 
     /**
@@ -242,6 +252,14 @@ export default class TextDatasource extends EventEmitter {
      */
     updateInsights(insights: VaultInsights): Promise<void> {
         return Promise.resolve();
+    }
+
+    /**
+     * Update shares on the remote
+     * @memberof TextDatasource
+     */
+    async updateShares(shares: Array<OutgoingShare>): Promise<void> {
+        throw new Error("Shares not supported");
     }
 }
 
